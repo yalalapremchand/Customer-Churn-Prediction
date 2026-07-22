@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Churn Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <div class="page-wrapper">
+
+        <main class="main-content">
+
+            <header class="hero-section fade-in-down">
+                <div class="hero-icon-wrapper">
+                    <i class="fa-solid fa-chart-line hero-icon"></i>
+                </div>
+                <h1 class="hero-title">Customer Churn Prediction</h1>
+                <p class="hero-subtitle">
+                    Predict whether a telecom customer is likely to stay or churn using Machine Learning.
+                </p>
+            </header>
+
+            <section class="glass-container fade-in-up">
+
+                <form action="/predict" method="POST" class="churn-form">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+                            <label for="gender"><i class="fa-solid fa-venus-mars"></i> Gender</label>
+                            <select id="gender" name="gender" class="form-control" required>
+                                <option value="" disabled selected>Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="senior_citizen"><i class="fa-solid fa-person-cane"></i> Senior Citizen</label>
+                            <select id="senior_citizen" name="senior_citizen" class="form-control" required>
+                                <option value="" disabled selected>Select Option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="partner"><i class="fa-solid fa-people-arrows"></i> Partner</label>
+                            <select id="partner" name="partner" class="form-control" required>
+                                <option value="" disabled selected>Select Option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dependents"><i class="fa-solid fa-children"></i> Dependents</label>
+                            <select id="dependents" name="dependents" class="form-control" required>
+                                <option value="" disabled selected>Select Option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tenure"><i class="fa-solid fa-calendar-days"></i> Tenure (months)</label>
+                            <input type="number" id="tenure" name="tenure" class="form-control" placeholder="e.g. 12" min="0" max="100" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone_service"><i class="fa-solid fa-phone"></i> Phone Service</label>
+                            <select id="phone_service" name="phone_service" class="form-control" required>
+                                <option value="" disabled selected>Select Option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="multiple_lines"><i class="fa-solid fa-phone-volume"></i> Multiple Lines</label>
+                            <select id="multiple_lines" name="multiple_lines" class="form-control" required>
+                                <option value="" disabled selected>Select Option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                                <option value="No phone service">No phone service</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="internet_service"><i class="fa-solid fa-wifi"></i> Internet Service</label>
+                            <select id="internet_service" name="internet_service" class="form-control" required>
+                                <option value="" disabled selected>Select Option</option>
+                                <option value="DSL">DSL</option>
+                                <option value="Fiber optic">Fiber optic</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="online_security"><i class="fa-solid fa-shield-halved"></i> Online Security</label>
+                            <select id="online_security" name="online_security" class="form-control" required>
+                                <option value="" disabled selected>Select Option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                                <option value="No internet service">No internet service</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="online_backup"><i class="fa-solid fa-cloud-arrow-up"></i> Online Backup</label>
+                            <select id="online_backup" name="online_backup" class="form-control" required>
+                                <option value="" disabled selected>Select Option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                                <option value="No internet service">No internet service</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="device_protection"><i class="fa-solid fa-mobile-screen-button"></i> Device Protection</label>
+                            <select id="device_protection" name="device_protection" class="form-control" required>
+                                <option value="" disabled selected>Select Option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                                <option value="No internet service">No internet service</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tech_support"><i class="fa-solid fa-headset"></i> Tech Support</label>
+                            <select id="tech_support" name="tech_support" class="form-control" required>
+                                <option value="" disabled selected>Select Option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                                <option value="No internet service">No internet service</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="streaming_tv"><i class="fa-solid fa-tv"></i> Streaming TV</label>
+                            <select id="streaming_tv" name="streaming_tv" class="form-control" required>
+                                <option value="" disabled selected>Select Option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                                <option value="No internet service">No internet service</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="streaming_movies"><i class="fa-solid fa-film"></i> Streaming Movies</label>
+                            <select id="streaming_movies" name="streaming_movies" class="form-control" required>
+                                <option value="" disabled selected>Select Option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                                <option value="No internet service">No internet service</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contract"><i class="fa-solid fa-file-signature"></i> Contract</label>
+                            <select id="contract" name="contract" class="form-control" required>
+                                <option value="" disabled selected>Select Option</option>
+                                <option value="Month-to-month">Month-to-month</option>
+                                <option value="One year">One year</option>
+                                <option value="Two year">Two year</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="paperless_billing"><i class="fa-solid fa-file-invoice"></i> Paperless Billing</label>
+                            <select id="paperless_billing" name="paperless_billing" class="form-control" required>
+                                <option value="" disabled selected>Select Option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="payment_method"><i class="fa-solid fa-credit-card"></i> Payment Method</label>
+                            <select id="payment_method" name="payment_method" class="form-control" required>
+                                <option value="" disabled selected>Select Option</option>
+                                <option value="Electronic check">Electronic check</option>
+                                <option value="Mailed check">Mailed check</option>
+                                <option value="Bank transfer (automatic)">Bank transfer (automatic)</option>
+                                <option value="Credit card (automatic)">Credit card (automatic)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="monthly_charges"><i class="fa-solid fa-indian-rupee-sign"></i> Monthly Charges</label>
+                            <input type="number" id="monthly_charges" name="monthly_charges" class="form-control" placeholder="e.g. 79.50" step="0.01" min="0" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="total_charges"><i class="fa-solid fa-sack-dollar"></i> Total Charges</label>
+                            <input type="number" id="total_charges" name="total_charges" class="form-control" placeholder="e.g. 1450.75" step="0.01" min="0" required>
+                        </div>
+
+                    </div>
+
+                    <button type="submit" class="predict-btn">
+                        <i class="fa-solid fa-magnifying-glass-chart"></i>
+                        Predict Churn
+                    </button>
+
+                </form>
+
+                {% if prediction %}
+                <div class="result fade-in-up">
+                    {{ prediction }}
+                </div>
+                {% endif %}
+
+            </section>
+
+        </main>
+
+        <footer class="app-footer">
+            <p>© 2026 PREMCHAND • Powered by MadeWithPC</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
